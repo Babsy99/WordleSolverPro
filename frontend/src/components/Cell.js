@@ -17,4 +17,3 @@ const Cell = ({ rowIndex, cellIndex, value, status }) => {
 };
 
 export default Cell;
-

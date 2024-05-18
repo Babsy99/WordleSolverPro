@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { GuessRow } from './GuessRow';
+import GuessRow from './GuessRow';
 
-export const GameBoard = () => {
-    const guesses = useSelector(state => state.guesses);
+const GameBoard = () => {
+    const guesses = useSelector(state => state.game.guesses);
 
     return (
         <div className="game-board">
@@ -14,3 +14,4 @@ export const GameBoard = () => {
     );
 };
 
+export default GameBoard;

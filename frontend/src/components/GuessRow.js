@@ -1,7 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 
-export const GuessRow = ({ guess, rowIndex }) => {
+const GuessRow = ({ guess, rowIndex }) => {
     return (
         <div className="guess-row">
             {guess.map((cell, cellIndex) => (
@@ -17,3 +17,4 @@ export const GuessRow = ({ guess, rowIndex }) => {
     );
 };
 
+export default GuessRow;

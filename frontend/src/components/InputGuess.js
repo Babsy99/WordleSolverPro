@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGuess, submitFeedback } from '../actions';
+import { setGuess, submitFeedback, setNextGuess } from '../actions';
 
 const InputGuess = () => {
     const [guess, setGuessInput] = useState('');
     const dispatch = useDispatch();
-    const currentRow = useSelector(state => state.currentRow);
-    const guesses = useSelector(state => state.guesses);
+    const currentRow = useSelector(state => state.game.currentRow);
+    const guesses = useSelector(state => state.game.guesses);
 
     const handleGuess = () => {
         if (guess.length === 5) {
@@ -34,6 +34,7 @@ const InputGuess = () => {
                     }
                     const data = await response.json();
                     console.log('Next best guess:', data.nextGuess);
+                    dispatch(setNextGuess(data.nextGuess)); // Update the state with next best guess
                 } catch (error) {
                     console.error('Error fetching next guess:', error);
                 }
@@ -60,4 +61,3 @@ const InputGuess = () => {
 };
 
 export default InputGuess;
-
