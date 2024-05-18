@@ -1,11 +1,16 @@
-export const SUBMIT_GUESS = 'SUBMIT_GUESS';
+export const SET_GUESS = 'SET_GUESS';
+export const SUBMIT_FEEDBACK = 'SUBMIT_FEEDBACK';
 export const TOGGLE_CELL_STATUS = 'TOGGLE_CELL_STATUS';
 export const RESET_GAME = 'RESET_GAME';
 export const NEW_GAME = 'NEW_GAME';
 
-export const submitGuess = (guess, rowIndex) => ({
-    type: SUBMIT_GUESS,
+export const setGuess = (guess, rowIndex) => ({
+    type: SET_GUESS,
     payload: { guess, rowIndex },
+});
+
+export const submitFeedback = () => ({
+    type: SUBMIT_FEEDBACK,
 });
 
 export const toggleCellStatus = (rowIndex, cellIndex) => ({
@@ -20,3 +25,4 @@ export const resetGame = () => ({
 export const newGame = () => ({
     type: NEW_GAME,
 });
+

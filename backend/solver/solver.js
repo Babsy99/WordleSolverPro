@@ -3,18 +3,39 @@ const possibleWords = ['cigar', 'rebut', 'sissy', 'humph', 'awake', 'blush', 'fo
 const filterWords = (guesses) => {
     return possibleWords.filter(word => {
         return guesses.every((guess) => {
-            return guess.every((cell, cellIndex) => {
-                if (cell.status === 'correct') {
-                    return word[cellIndex] === cell.value;
+            // Track counts of letters
+            const correctCounts = {};
+            const presentCounts = {};
+            
+            // First pass to handle 'correct' letters
+            for (let i = 0; i < guess.length; i++) {
+                if (guess[i].status === 'correct') {
+                    if (word[i] !== guess[i].value) {
+                        return false;
+                    }
+                    correctCounts[guess[i].value] = (correctCounts[guess[i].value] || 0) + 1;
                 }
-                if (cell.status === 'present') {
-                    return word.includes(cell.value) && word[cellIndex] !== cell.value;
+            }
+
+            // Second pass to handle 'present' and 'absent' letters
+            for (let i = 0; i < guess.length; i++) {
+                if (guess[i].status === 'present') {
+                    if (!word.includes(guess[i].value) || word[i] === guess[i].value) {
+                        return false;
+                    }
+                    presentCounts[guess[i].value] = (presentCounts[guess[i].value] || 0) + 1;
+                } else if (guess[i].status === 'absent') {
+                    if (correctCounts[guess[i].value] || presentCounts[guess[i].value]) {
+                        const wordLetterCount = word.split('').filter(char => char === guess[i].value).length;
+                        if (wordLetterCount > (correctCounts[guess[i].value] || 0) + (presentCounts[guess[i].value] || 0)) {
+                            return false;
+                        }
+                    } else if (word.includes(guess[i].value)) {
+                        return false;
+                    }
                 }
-                if (cell.status === 'absent') {
-                    return !word.includes(cell.value);
-                }
-                return true;
-            });
+            }
+            return true;
         });
     });
 };
@@ -22,4 +43,5 @@ const filterWords = (guesses) => {
 export const suggestNextGuess = (guesses) => {
     const filteredWords = filterWords(guesses);
     return filteredWords.length > 0 ? filteredWords[0] : null;
-};
+
+}

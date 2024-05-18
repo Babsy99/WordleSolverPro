@@ -1,4 +1,4 @@
-import { SUBMIT_GUESS, TOGGLE_CELL_STATUS, RESET_GAME, NEW_GAME } from '../actions';
+import { SET_GUESS, SUBMIT_FEEDBACK, TOGGLE_CELL_STATUS, RESET_GAME, NEW_GAME } from '../actions';
 
 const initialState = {
     guesses: Array(6).fill(null).map(() => Array(5).fill({ value: '', status: 'empty' })),
@@ -7,7 +7,7 @@ const initialState = {
 
 const gameReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SUBMIT_GUESS:
+        case SET_GUESS:
             if (state.currentRow >= 6) return state;
             const newGuesses = [...state.guesses];
             const guessArray = action.payload.guess.split('').map((char) => ({ value: char, status: 'empty' }));
@@ -27,6 +27,12 @@ const gameReducer = (state = initialState, action) => {
                 )
             );
             return { ...state, guesses: updatedGuesses };
+
+        case SUBMIT_FEEDBACK:
+            return {
+                ...state,
+                currentRow: state.currentRow + 1,
+            };
 
         case RESET_GAME:
         case NEW_GAME:

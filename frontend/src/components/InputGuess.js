@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { submitGuess } from '../actions';
+import { setGuess, submitFeedback } from '../actions';
 
 const InputGuess = () => {
-    const [guess, setGuess] = useState('');
+    const [guess, setGuessInput] = useState('');
     const dispatch = useDispatch();
     const currentRow = useSelector(state => state.currentRow);
     const guesses = useSelector(state => state.guesses);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (guess.length === 5 && currentRow < 6) {
-            dispatch(submitGuess(guess, currentRow));
-            setGuess('');
-            console.log('Submitting guess:', guess);
+    const handleGuess = () => {
+        if (guess.length === 5) {
+            dispatch(setGuess(guess, currentRow));
+            setGuessInput('');
+        }
+    };
+
+    const handleSubmit = async () => {
+        if (currentRow < 6) {
+            dispatch(submitFeedback());
 
             // Wait for the next render cycle to ensure state is updated
             setTimeout(async () => {
@@ -38,20 +42,22 @@ const InputGuess = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input 
+        <div>
+            <input
                 id="guess-input"
                 name="guess-input"
-                type="text" 
-                value={guess} 
-                onChange={(e) => setGuess(e.target.value)} 
-                maxLength="5" 
-                pattern="[A-Za-z]{5}" 
-                required 
+                type="text"
+                value={guess}
+                onChange={(e) => setGuessInput(e.target.value)}
+                maxLength="5"
+                pattern="[A-Za-z]{5}"
+                required
             />
-            <button type="submit">Submit Guess</button>
-        </form>
+            <button onClick={handleGuess}>Guess</button>
+            <button onClick={handleSubmit}>Submit</button>
+        </div>
     );
 };
 
 export default InputGuess;
+
