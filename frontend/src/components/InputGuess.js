@@ -18,8 +18,10 @@ const InputGuess = () => {
     const handleSubmit = async () => {
         if (currentRow < 6) {
             dispatch(submitFeedback());
+            console.log('Submitted Feedback');
+            console.log('Current Guesses:', guesses);
 
-            // Wait for the next render cycle to ensure state is updated
+            // Delay to ensure state is updated before fetching the next guess
             setTimeout(async () => {
                 try {
                     const response = await fetch('http://localhost:5000/api/guess', {

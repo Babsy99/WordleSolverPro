@@ -1,22 +1,20 @@
 import React from 'react';
-import { GameBoard } from './GameBoard';
+import GameBoard from './GameBoard';
 import InputGuess from './InputGuess';
-import { Controls } from './Controls';
-import { Provider } from 'react-redux';
-import store from '../store';
-import '../App.css';
+import NextGuess from './NextGuess';
+import '../styles/App.css';
 
-function App() {
+const App = () => {
     return (
-        <Provider store={store}>
-            <div className="App">
-                <h1>Wordle Solver Pro</h1>
+        <div className="App">
+            <h1>Wordle Solver Pro</h1>
+            <div className="game-container">
                 <GameBoard />
                 <InputGuess />
-                <Controls />
+                <NextGuess />
             </div>
-        </Provider>
+        </div>
     );
-}
+};
 
 export default App;

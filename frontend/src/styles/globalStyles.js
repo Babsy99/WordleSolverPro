@@ -8,11 +8,13 @@ const GlobalStyle = createGlobalStyle`
     }
     .App {
         text-align: center;
+        padding: 20px;
     }
     .game-board {
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin: 0 auto;
     }
     .guess-row {
         display: flex;
@@ -26,6 +28,7 @@ const GlobalStyle = createGlobalStyle`
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        font-size: 1.2rem;
     }
     .empty {
         background-color: white;
@@ -41,6 +44,38 @@ const GlobalStyle = createGlobalStyle`
     }
     .controls {
         margin-top: 20px;
+    }
+    .next-guess {
+        margin-top: 20px;
+        font-size: 1.5rem;
+    }
+    @media (max-width: 768px) {
+        .cell {
+            width: 30px;
+            height: 30px;
+            margin: 3px;
+            font-size: 1rem;
+        }
+        .next-guess {
+            font-size: 1.2rem;
+        }
+    }
+    @media (max-width: 480px) {
+        .cell {
+            width: 25px;
+            height: 25px;
+            margin: 2px;
+            font-size: 0.8rem;
+        }
+        .next-guess {
+            font-size: 1rem;
+        }
+        .game-container {
+            flex-direction: column;
+        }
+        .App {
+            padding: 10px;
+        }
     }
 `;
 
